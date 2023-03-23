@@ -39,11 +39,11 @@ function randomAge(minMonth, maxMonth){
 
 Pet.prototype.render = function(){
   let parentElement = document.getElementById('kittenProfiles');
-  console.log('🚀 ~ file: app.js:64 ~ parentElement:', parentElement);
+  // console.log('🚀 ~ file: app.js:64 ~ parentElement:', parentElement);
 
   //create article
   let article = document.createElement('article');
-  console.log('🚀 ~ file: app.js:69 ~ article:', article);
+  // console.log('🚀 ~ file: app.js:69 ~ article:', article);
   parentElement.appendChild(article);
 
   //create h2
@@ -69,6 +69,39 @@ Pet.prototype.render = function(){
   petImage.setAttribute('src', 'images/' + this.imageName + '.jpeg');
   petImage.setAttribute('alt', 'Adopt our pet kittens');
   article.appendChild(petImage);
+
+
+
+
+  //add table
+  //we need to get the element by its id
+  let petTable = document.getElementById('adoptPets-table');
+
+  //first we create a TR table row.
+  //then we can create TR table body
+  let petRow = document.createElement('tr');
+
+  let headNameCell = document.createElement('th');
+  headNameCell.textContent = this.petName;
+  petRow.appendChild(headNameCell);
+
+  // let nameCell = document.createElement('td');
+  // nameCell.textContent = this.petName;
+  // headRow.appendChild(nameCell);
+
+  let breedCell = document.createElement('td');
+  breedCell.textContent = this.breed;
+  petRow.appendChild(breedCell);
+
+  let ageCell = document.createElement('td');
+  ageCell.textContent = this.age;
+  petRow.appendChild(ageCell);
+
+  let interestsCell = document.createElement('td');
+  interestsCell.textContent = this.interests;
+  petRow.appendChild(interestsCell);
+
+  petTable.appendChild(petRow);
 };
 
 

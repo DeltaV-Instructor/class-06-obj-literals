@@ -1,9 +1,12 @@
 'use strict';
 console.log('js connected');
 
-// Problem Domain: the Cedar Rapids Kitten Rescue has tons of kittens who need good homes. One of the best ways to reach prospective adoptive homes is to have profiles for each kitten available on a website. There are hundreds of kittens, though, and only a few volunteers; it's too time-consuming to hand-code each kitten's profile on their website. They need a better way.
+let form = document.getElementById('new-pet-form');
+// console.log("🚀 ~ file: app.js:5 ~ form:", form)
 
-//let us create a constuctor function
+
+let petArray = [];
+
 function Pet(petName,breed,imageName,interests,isGoodWithKids,isGoodWithDogs,isGoodWithAnimals){
   this.petName = petName;
   this.breed = breed;
@@ -12,26 +15,21 @@ function Pet(petName,breed,imageName,interests,isGoodWithKids,isGoodWithDogs,isG
   this.isGoodWithKids = isGoodWithKids;
   this.isGoodWithDogs = isGoodWithDogs;
   this.isGoodWithAnimals = isGoodWithAnimals;
+  petArray.push(this);
 }
 
-// new Pet(here is where we need the arguments for our constructor function)
 let petOne = new Pet('Tom', 'Tiger', 'diabloBlanco',['Sun light', 'Mouse toys', 'Red Dots'], true, false, true);
 let petTwo = new Pet('Garfield','LazyCat', 'jumper',['Cat nip', 'strings', 'food'],true, false,true);
 let petThree = new Pet('Sylvester','sadCat', 'tommyBob',['birds', 'wands', 'naps'],true, false,true);
 
-//add a prototype function for our objects that know that they are a Pet object
 Pet.prototype.setAge = function(){
   this.age = randomAge(3,12) + ' Months old.';
 };
 
-//add one more prototype
 Pet.prototype.getInterests = function(){
-  //grad a random array index and return that interest
   let randomeArrayIndex = Math.floor(Math.random() * this.interests.length);
-  // console.log("🚀 ~ file: app.js:46 ~ randomeArrayIndex:", randomeArrayIndex);
   return randomeArrayIndex;
 };
-//helper function
 function randomAge(minMonth, maxMonth){
   return Math.floor(Math.random() * (maxMonth - minMonth) + minMonth);
 }
@@ -39,24 +37,18 @@ function randomAge(minMonth, maxMonth){
 
 Pet.prototype.render = function(){
   let parentElement = document.getElementById('kittenProfiles');
-  // console.log('🚀 ~ file: app.js:64 ~ parentElement:', parentElement);
 
-  //create article
   let article = document.createElement('article');
-  // console.log('🚀 ~ file: app.js:69 ~ article:', article);
   parentElement.appendChild(article);
 
-  //create h2
   let h2 = document.createElement('h2');
   h2.textContent = this.petName;
   article.appendChild(h2);
 
-  // create p
   let petPara = document.createElement('p');
   petPara.textContent = 'Cats are cool, and pet one is ' + this.age;
   article.appendChild(petPara);
 
-  // create ul
   let petUl = document.createElement('ul');
   article.appendChild(petUl);
 
@@ -71,23 +63,13 @@ Pet.prototype.render = function(){
   article.appendChild(petImage);
 
 
-
-
-  //add table
-  //we need to get the element by its id
   let petTable = document.getElementById('adoptPets-table');
 
-  //first we create a TR table row.
-  //then we can create TR table body
   let petRow = document.createElement('tr');
 
   let headNameCell = document.createElement('th');
   headNameCell.textContent = this.petName;
   petRow.appendChild(headNameCell);
-
-  // let nameCell = document.createElement('td');
-  // nameCell.textContent = this.petName;
-  // headRow.appendChild(nameCell);
 
   let breedCell = document.createElement('td');
   breedCell.textContent = this.breed;
@@ -123,11 +105,41 @@ petTwo.setAge();
 petThree.setAge();
 
 
-let allPets = [petOne, petTwo, petThree];
-console.log('🚀 ~ file: app.js:43 ~ allPets:', allPets);
+// let allPets = [petOne, petTwo, petThree];
 
-for(let i = 0; i < allPets.length; i++){
-  allPets[i].render();
+for(let i = 0; i < petArray.length; i++){
+  petArray[i].render();
+}
+
+
+
+function handleFormSubmit(event){
+  event.preventDefault();
+  console.log('I submittteeedddd a form !!!!');
+  event.stopPropagation();
+  //get the name
+  let petName = event.target.name.value;
+  let breedInput = document.getElementById('breed');
+  //bracket notation
+  let breedValue = breedInput['value'];
+  let imageName = document.getElementById('imageName');
+  //dot notation
+  let imageValue = imageName.value;
+  let interestsInput = document.getElementById('interests');
+  let interestValues  = interestsInput.value;
+
+
+  let isGoodWithKids = event.target.isGoodWithKids.checked;
+  let isGoodWithCats = event.target.isGoodWithCats.checked;
+  let isGoodWithDogs = event.target.isGoodWithDogs.checked;
+  console.log({isGoodWithKids,isGoodWithCats, isGoodWithDogs});
+
+  let newPet = new Pet(petName, breedValue, imageValue,[interestValues],isGoodWithKids, isGoodWithDogs, isGoodWithCats);
+  newPet.getInterests();
+  newPet.setAge();
+  console.log(newPet);
+  newPet.render();
+  form.reset();
 }
 
 
@@ -135,14 +147,16 @@ for(let i = 0; i < allPets.length; i++){
 
 
 
+//call our render function to see our objects and pets.
+
+//Set up the event listerners to listen to the submit event.
+//1. which element do we need? form
+//2.which event are we listening to? submit.
+//3.what code should I run?   run a function.
 
 
-
-
-
-
-
-
+// two args
+form.addEventListener('submit', handleFormSubmit);
 
 
 

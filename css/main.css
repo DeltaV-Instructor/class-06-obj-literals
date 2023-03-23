@@ -1,6 +1,7 @@
-body {
-  background-color: rgb(240, 136, 32);
-  font-size: 34px;
+body{
+  margin: 0 auto;
+  background-color: honeydew;
+  width: 1200px;
 }
 
 
@@ -10,16 +11,27 @@ table {
   width: 100%;
 }
 
-
-thead {
-  font-size: 400px;
-}
 td, th {
-  border: 2px solid #dddddd;
+  border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #bd4343;
+  background-color: #dddddd;
+}
+
+
+article {
+  float: left;
+  margin-right: 150px;
+  
+}
+
+article:nth-child(3){
+  margin: 0px;
+}
+
+article {
+  margin-bottom: 50px;
 }
